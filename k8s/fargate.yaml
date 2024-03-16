@@ -17,8 +17,6 @@ spec:
         image: 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api
         ports:
         - containerPort: 8080
-      nodeSelector:
-        eks.amazonaws.com/compute-type: fargate
 ---
 apiVersion: v1
 kind: Service
