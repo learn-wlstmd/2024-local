@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golang-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: golang-api
+  template:
+    metadata:
+      labels:
+        app: golang-api
+    spec:
+      containers:
+      - name: golang-api
+        image: 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: golang-api
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: golang-api
