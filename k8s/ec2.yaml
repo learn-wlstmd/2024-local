@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: golang-api
+  name: golang-api-ec2
 spec:
   replicas: 2
   selector:
@@ -17,11 +17,13 @@ spec:
         image: 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api
         ports:
         - containerPort: 8080
+      nodeSelector:
+        eks.amazonaws.com/compute-type: ec2
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: golang-api
+  name: golang-api-ec2
 spec:
   type: LoadBalancer
   ports:
