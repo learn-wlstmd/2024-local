@@ -3,7 +3,7 @@
 aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin AWS계정ID.dkr.ecr.ap-northeast-2.amazonaws.com
 docker build -t golang-api .
 docker tag golang-api:latest AWS계정ID.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
-docker push 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
+docker push AWS계정ID.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
 ```
 
 ## 2. EKS 클러스터 생성
@@ -14,13 +14,14 @@ eksctl create cluster --name go-api --region ap-northeast-2 --nodegroup-name go-
 
 ## 3. EC2 노드 그룹 생성
 ```
-eksctl create nodegroup --cluster go-api --name go-api-node --node-type t3.medium --nodes-min 2 --nodes-max 3
+eksctl create nodegroup --cluster go-api --name go-api-node --node-type t3.medium --nodes-min 2 --nodes-max 3 --node-labels "app=golang-api-node"
 ```
 
 
 ## 4. Fargate 노드 그룹 생성하기
 ```
 eksctl create fargateprofile --cluster go-api --name go-api-fg --namespace default --region ap-northeast-2
+eksctl create fargateprofile --cluster go-api --name go-api-fg-specific --namespace default --labels eks.amazonaws.com/compute-type=fargate --region ap-northeast-2
 ```
 
 
