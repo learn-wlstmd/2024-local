@@ -1,25 +1,30 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: go-app-ingress
+  name: eks-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
 spec:
+  defaultBackend:
+    service:
+      name: ec2-service
+      port:
+        number: 8080
   rules:
-  - host: a0a7cfa3bfd6845d18ff0e4ac0589869-35357262.ap-northeast-2.elb.amazonaws.com
-    http:
-      paths:
-      - pathType: ImplementationSpecific
-        path: /healthz
-        backend:
-          service:
-            name: golang-api-ec2-service
-            port:
-              number: 8080
-      - pathType: ImplementationSpecific
-        path: /v1/dummy
-        backend:
-          service:
-            name: golang-api-fargate-service
-            port:
-              number: 8080
+    - http:
+        paths:
+          - path: /healthz
+            pathType: Prefix
+            backend:
+              service:
+                name: ec2-service
+                port:
+                  number: 8080
+          - path: /v1/dummy
+            pathType: Prefix
+            backend:
+              service:
+                name: fargate-service
+                port:
+                  number: 8080

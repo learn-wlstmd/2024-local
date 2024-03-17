@@ -22,3 +22,7 @@ eksctl create nodegroup --cluster go-api --name go-api-node --node-type t3.mediu
 ```
 eksctl create fargateprofile --cluster go-api --name go-api-fg --namespace default --region ap-northeast-2
 ```
+
+## 5. Ingress ALB Controller 설치
+```
+```
