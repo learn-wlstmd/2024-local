@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ec2-deployment-a
+  namespace: private-subnet-a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ec2-app-a
+  template:
+    metadata:
+      labels:
+        app: ec2-app-a
+    spec:
+      containers:
+      - name: ec2-container
+        image: 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment  
+metadata:
+  name: fargate-deployment-a
+  namespace: private-subnet-a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fargate-app-a
+  template:
+    metadata:
+      labels:
+        app: fargate-app-a
+    spec:
+      containers:
+      - name: fargate-container
+        image: 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ec2-deployment-b
+  namespace: private-subnet-b
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ec2-app-b
+  template:
+    metadata:
+      labels:
+        app: ec2-app-b
+    spec:
+      containers:
+      - name: ec2-container
+        image: 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
+        ports:
+        - containerPort: 8080
+---  
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fargate-deployment-b
+  namespace: private-subnet-b  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fargate-app-b
+  template:
+    metadata:
+      labels:
+        app: fargate-app-b
+    spec:
+      containers:
+      - name: fargate-container
+        image: 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
+        ports:
+        - containerPort: 8080
