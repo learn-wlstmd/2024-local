@@ -2,46 +2,43 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ec2-service-a
-  namespace: private-subnet-a
+  namespace: wsi-private-a
 spec:
   selector:
     app: ec2-app-a
   ports:
     - port: 8080
       targetPort: 8080
-      
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: fargate-service-a
-  namespace: private-subnet-a
+  namespace: wsi-private-a
 spec:
   selector:
     app: fargate-app-a
   ports:
     - port: 8080
       targetPort: 8080
-      
 ---
 apiVersion: v1
 kind: Service  
 metadata:
   name: ec2-service-b
-  namespace: private-subnet-b
+  namespace: wsi-private-b
 spec:
   selector:
     app: ec2-app-b
   ports:
     - port: 8080
       targetPort: 8080
-      
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: fargate-service-b
-  namespace: private-subnet-b  
+  namespace: wsi-private-b  
 spec:
   selector:
     app: fargate-app-b
