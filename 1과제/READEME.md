@@ -20,7 +20,13 @@ eksctl create nodegroup --cluster go-api --name go-api-node --node-type t3.mediu
 
 ## 4. Fargate 노드 그룹 생성하기
 ```
-eksctl create fargateprofile --cluster go-api --name go-api-fg --namespace fargate --region ap-northeast-2
+eksctl create fargateprofile \
+  --cluster go-api \
+  --name go-api-fg \
+  --namespace fargate \
+  --region ap-northeast-2 \
+  --labels app=fargate-app-a \
+  --labels app=fargate-app-b
 ```
 
 ## 5. Ingress ALB Controller 설치
