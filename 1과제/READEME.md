@@ -20,6 +20,8 @@ eksctl create nodegroup --cluster go-api --name go-api-node --node-type t3.mediu
 
 ## 4. Fargate 노드 그룹 생성하기
 ```
+eksctl get fargateprofile --cluster go-api --name go-api-fg -o yaml
+
 eksctl create fargateprofile \
   --cluster go-api \
   --name go-api-fg \

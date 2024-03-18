@@ -20,7 +20,7 @@ spec:
         - containerPort: 8080
 ---
 apiVersion: apps/v1
-kind: Deployment  
+kind: Deployment
 metadata:
   name: fargate-deployment-a
   namespace: fargate
