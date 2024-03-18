@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ec2-service-a
-  namespace: wsi-private-a
+  namespace: ec2
 spec:
   selector:
     app: ec2-app-a
@@ -14,7 +14,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: fargate-service-a
-  namespace: wsi-private-a
+  namespace: fargate
 spec:
   selector:
     app: fargate-app-a
@@ -26,7 +26,7 @@ apiVersion: v1
 kind: Service  
 metadata:
   name: ec2-service-b
-  namespace: wsi-private-b
+  namespace: ec2
 spec:
   selector:
     app: ec2-app-b
@@ -38,7 +38,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: fargate-service-b
-  namespace: wsi-private-b  
+  namespace: fargate
 spec:
   selector:
     app: fargate-app-b

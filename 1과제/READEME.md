@@ -25,21 +25,37 @@ eksctl create fargateprofile --cluster go-api --name go-api-fg --namespace farga
 
 ## 5. Ingress ALB Controller 설치
 ```
+curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
+
+aws iam create-policy \
+    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-document file://iam_policy.json
+
+eksctl utils associate-iam-oidc-provider --region=ap-northeast-2 --cluster=go-api --approve
+
 eksctl create iamserviceaccount \
   --cluster=go-api \
   --namespace=kube-system \
   --name=aws-load-balancer-controller \
+  --role-name AmazonEKSLoadBalancerControllerRole \
   --attach-policy-arn=arn:aws:iam::362708816803:policy/AWSLoadBalancerControllerIAMPolicy \
-  --override-existing-serviceaccounts \
   --approve
 
-  helm repo add eks https://aws.github.io/eks-charts
+helm repo add eks https://aws.github.io/eks-charts
 
-  helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
+helm repo update eks
+
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
+  -n kube-system \
   --set clusterName=go-api \
   --set serviceAccount.create=false \
-  --set serviceAccount.name=aws-load-balancer-controller \
-  -n kube-system
+  --set serviceAccount.name=aws-load-balancer-controller 
 
-  kubectl get deployment -n kube-system aws-load-balancer-controller
+kubectl get deployment -n kube-system aws-load-balancer-controller
+```
+
+## 6. namespace 생성
+```
+kubectl create namespace fargate 
+kubectl create namespace ec2
 ```
