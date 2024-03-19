@@ -28,11 +28,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fargate-app-a
+      app: fargate-app-a # 이 레이블과 일치해야 함
   template:
     metadata:
       labels:
-        app: fargate-app-a
+        app: fargate-app-a # 이 레이블을 사용
     spec:
       containers:
       - name: fargate-container
@@ -62,7 +62,7 @@ spec:
         - containerPort: 8080
 ---  
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment  
 metadata:
   name: fargate-deployment-b
   namespace: fargate
@@ -70,11 +70,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fargate-app-b
+      app: fargate-app-b # 이 레이블과 일치해야 함
   template:
     metadata:
       labels:
-        app: fargate-app-b
+        app: fargate-app-b # 이 레이블을 사용
     spec:
       containers:
       - name: fargate-container
