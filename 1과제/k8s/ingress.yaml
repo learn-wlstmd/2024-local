@@ -26,13 +26,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: ec2-service-a
-            port:
-              number: 8080
-      - path: /v1/dummy
-        pathType: Prefix
-        backend:
-          service:
             name: fargate-service-a
             port:
               number: 8080
@@ -40,14 +33,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: ec2-service-b  
-            port:
-              number: 8080
-      - path: /v1/dummy/ec2
-        pathType: Prefix
-        backend:
-          service:
-            name: ec2-service-b
+            name: ec2-service-b 
             port:
               number: 8080
       - path: /v1/dummy
