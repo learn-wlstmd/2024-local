@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ec2-deployment-a
-  namespace: ec2
+  namespace: ec2-fargate
 spec:
   replicas: 1
   selector:
@@ -23,7 +23,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fargate-deployment-a
-  namespace: fargate
+  namespace: ec2-fargate
 spec:
   replicas: 1
   selector:
@@ -44,7 +44,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ec2-deployment-b
-  namespace: ec2
+  namespace: ec2-fargate
 spec:
   replicas: 1
   selector:
@@ -65,7 +65,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fargate-deployment-b
-  namespace: fargate
+  namespace: ec2-fargate
 spec:
   replicas: 1
   selector:
