@@ -4,7 +4,7 @@ metadata:
   name: ec2-service-a
   namespace: ec2
 spec:
-  type: LoadBalancer  # 타입을 LoadBalancer로 변경
+  type: LoadBalancer
   selector:
     app: ec2-app-a
   ports:
@@ -19,7 +19,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: fargate-app-a # 이 레이블을 가진 파드에 트래픽 전달
+    app: fargate-app-a
   ports:
   - port: 8080
     targetPort: 8080
@@ -30,7 +30,7 @@ metadata:
   name: ec2-service-b
   namespace: ec2
 spec:
-  type: LoadBalancer  # 타입을 LoadBalancer로 변경
+  type: LoadBalancer
   selector:
     app: ec2-app-b
   ports:
@@ -45,7 +45,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: fargate-app-b # 이 레이블을 가진 파드에 트래픽 전달
+    app: fargate-app-b
   ports:
   - port: 8080
     targetPort: 8080

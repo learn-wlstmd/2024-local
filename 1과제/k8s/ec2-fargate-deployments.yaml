@@ -28,11 +28,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fargate-app-a # 이 레이블과 일치해야 함
+      app: fargate-app-a
   template:
     metadata:
       labels:
-        app: fargate-app-a # 이 레이블을 사용
+        app: fargate-app-a
     spec:
       containers:
       - name: fargate-container
@@ -70,11 +70,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fargate-app-b # 이 레이블과 일치해야 함
+      app: fargate-app-b
   template:
     metadata:
       labels:
-        app: fargate-app-b # 이 레이블을 사용
+        app: fargate-app-b
     spec:
       containers:
       - name: fargate-container
