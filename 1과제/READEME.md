@@ -66,4 +66,5 @@ kubectl get deployment -n kube-system aws-load-balancer-controller
 ```
 kubectl create namespace fargate 
 kubectl create namespace ec2
+kubectl create namespace alb
 ```
