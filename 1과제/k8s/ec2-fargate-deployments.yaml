@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ec2-deployment-a
+  name: ec2-deployment
   namespace: ec2-fargate
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ec2-app-a
+      app: ec2-app
   template:
     metadata:
       labels:
-        app: ec2-app-a
+        app: ec2-app
     spec:
       containers:
       - name: ec2-container
@@ -36,27 +36,6 @@ spec:
     spec:
       containers:
       - name: fargate-container
-        image: 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
-        ports:
-        - containerPort: 8080
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ec2-deployment-b
-  namespace: ec2-fargate
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ec2-app-b
-  template:
-    metadata:
-      labels:
-        app: ec2-app-b
-    spec:
-      containers:
-      - name: ec2-container
         image: 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
         ports:
         - containerPort: 8080

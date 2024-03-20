@@ -24,10 +24,3 @@ spec:
                 name: ec2-service-a
                 port:
                   number: 8080
-          - path: /healthz
-            pathType: Prefix
-            backend:
-              service:
-                name: ec2-service-b
-                port:
-                  number: 8080
