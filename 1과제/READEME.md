@@ -27,7 +27,7 @@ eksctl get fargateprofile --cluster go-api
 eksctl create fargateprofile \
   --cluster go-api \
   --name go-api-fg \
-  --namespace fargate \
+  --namespace ec2-fargate \
   --region ap-northeast-2 \
   --labels app=fargate-app-a \
   --labels app=fargate-app-b
@@ -68,5 +68,5 @@ kubectl get deployment -n kube-system aws-load-balancer-controller
 ```
 kubectl create namespace fargate 
 kubectl create namespace ec2
-kubectl create namespace alb
+kubectl create namespace ec2-fargate
 ```
