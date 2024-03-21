@@ -1,3 +1,32 @@
+## 0. 참조 명령어 : eksctl install cmd 추가 해야함
+```
+sudo yum update -y
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+sudo yum install jq -y
+
+sudo yum install curl -y
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+sudo yum install wget -y
+
+sudo yum install docker -y
+sudo systemctl start docker
+sudo systemctl enable docker
+
+
+kubectl version --client
+eksctl version
+```
+
 ## 1. ECR 이미지 생성 및 Push
 ```
 aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin AWS계정ID.dkr.ecr.ap-northeast-2.amazonaws.com
@@ -68,4 +97,9 @@ kubectl get deployment -n kube-system aws-load-balancer-controller
 kubectl create namespace fargate 
 kubectl create namespace ec2
 kubectl create namespace ec2-fargate
+```
+
+## 7. DocumentDB 참조 링크
+```
+https://medium.com/classmethodkorea/aws-%EC%9E%85%EB%AC%B8-%EC%8B%9C%EB%A6%AC%EC%A6%88-amazon-elasticache%ED%8E%B8-e2413a3d35d8
 ```
