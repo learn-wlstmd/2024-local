@@ -103,3 +103,8 @@ kubectl create namespace ec2-fargate
 ```
 https://medium.com/classmethodkorea/aws-%EC%9E%85%EB%AC%B8-%EC%8B%9C%EB%A6%AC%EC%A6%88-amazon-elasticache%ED%8E%B8-e2413a3d35d8
 ```
+
+## 8. 1과제 참조 Golang 코드
+```
+https://github.com/cloud-daeyang/golang-app-with-documentDB-and-elastiCache
+```
