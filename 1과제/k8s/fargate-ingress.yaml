@@ -21,13 +21,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: fargate-service-a
-                port:
-                  number: 8080
-          - path: /v1/dummy
-            pathType: Prefix
-            backend:
-              service:
-                name: fargate-service-b
+                name: fargate-service
                 port:
                   number: 8080
