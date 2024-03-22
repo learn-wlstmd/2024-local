@@ -108,3 +108,11 @@ https://medium.com/classmethodkorea/aws-%EC%9E%85%EB%AC%B8-%EC%8B%9C%EB%A6%AC%EC
 ```
 https://github.com/cloud-daeyang/golang-app-with-documentDB-and-elastiCache
 ```
+
+## 9. Secret Manager
+```
+aws secretsmanager create-secret --name "/secrets/skills/app" \
+--description "MongoDB and Redis credentials for my app" \
+--secret-string '{"mongoUri":"mongodb://wlstmd:cloud24admin!!@docdb-2024-03-22-00-22-46.cluster-cxytji5957dw.ap-northeast-2.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false","redisAddr":"test-ec-tctbtd.serverless.apn2.cache.amazonaws.com:6379"}' \
+--region ap-northeast-2
+```
