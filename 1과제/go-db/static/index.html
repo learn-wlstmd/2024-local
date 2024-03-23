@@ -45,44 +45,44 @@
         </div>
     </div>
     <script>
-      function saveSong() {
-          var title = document.getElementById('title').value;
-          var singer = document.getElementById('singer').value;
-          var text = document.getElementById('text').value;
-  
-          fetch('http://localhost:8080/cd', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ title: title, singer: singer, text: text }),
-          })
-          .then(response => response.text())
-          .then(data => {
-              alert('Song Saved');
-              document.getElementById('title').value = '';
-              document.getElementById('singer').value = '';
-              document.getElementById('text').value = '';
-          })
-          .catch((error) => {
-              console.error('Error:', error);
-          });
-      }
-  
-      function searchSong() {
-          var title = document.getElementById('searchTitle').value;
-  
-          fetch('http://localhost:8080/cd/' + title)
-          .then(response => response.json())
-          .then(data => {
-              var result = `Title: ${data.title}<br>Singer: ${data.singer}<br>Text: ${data.text}`;
-              document.getElementById('searchResult').innerHTML = result;
-          })
-          .catch((error) => {
-              console.error('Error:', error);
-              document.getElementById('searchResult').innerHTML = 'Song not found';
-          });
-      }
-  </script>  
+        function saveSong() {
+            var title = document.getElementById('title').value;
+            var singer = document.getElementById('singer').value;
+            var text = document.getElementById('text').value;
+            
+            fetch('http://wsi-alb-785714258.ap-northeast-2.elb.amazonaws.com:8080/cd', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title: title, singer: singer, text: text }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert('Song Saved');
+                document.getElementById('title').value = '';
+                document.getElementById('singer').value = '';
+                document.getElementById('text').value = '';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+        function searchSong() {
+            var title = document.getElementById('searchTitle').value;
+            var url = new URL(`http://wsi-alb-785714258.ap-northeast-2.elb.amazonaws.com:8080/cd/${title}`);
+
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var result = `Title: ${data.title}<br>Singer: ${data.singer}<br>Text: ${data.text}`;
+                document.getElementById('searchResult').innerHTML = result;
+            })
+            .catch((error) => {
+            console.error('Error:', error);
+            document.getElementById('searchResult').innerHTML = 'Song not found';
+            });
+        }
+    </script>  
 </body>
 </html>

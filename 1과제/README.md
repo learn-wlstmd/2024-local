@@ -101,7 +101,7 @@ kubectl create namespace ec2
 kubectl create namespace ec2-fargate
 ```
 
-## 7. DocumentDB 참조 링크
+## 7. ElastiCache 참조 링크
 ```
 https://medium.com/classmethodkorea/aws-%EC%9E%85%EB%AC%B8-%EC%8B%9C%EB%A6%AC%EC%A6%88-amazon-elasticache%ED%8E%B8-e2413a3d35d8
 ```
