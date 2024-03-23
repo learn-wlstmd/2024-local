@@ -47,15 +47,16 @@ func main() {
 
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
-	http.HandleFunc("/cd", handleSongsCORS)
-	http.HandleFunc("/health", healthCheckHandlerCORS)
+
+	// CORS 미들웨어 적용
+	handler := corsMiddleware(http.DefaultServeMux)
+
+	http.HandleFunc("/cd", handleSongs)
+	http.HandleFunc("/health", healthCheckHandler)
 
 	log.Println("서버가 시작됩니다. 포트 8080에서 대기 중...")
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
-	if err != nil {
-		log.Fatalf("서버 시작에 실패했습니다: %v", err)
-	}
+	log.Fatal(http.ListenAndServe(":8080", handler))
 }
 
 func getSecrets(secretName string) Secrets {
@@ -86,20 +87,16 @@ func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 }
 
-func handleSongsCORS(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w)
-	if r.Method == "OPTIONS" {
-		return
-	}
-	handleSongs(w, r)
-}
-
-func healthCheckHandlerCORS(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w)
-	if r.Method == "OPTIONS" {
-		return
-	}
-	healthCheckHandler(w, r)
+// CORS 미들웨어 구현
+func corsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w)
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
 }
 
 func handleSongs(w http.ResponseWriter, r *http.Request) {

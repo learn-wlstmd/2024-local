@@ -33,6 +33,8 @@ aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS
 docker build -t golang-api .
 docker tag golang-api:latest AWS계정ID.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
 docker push AWS계정ID.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
+
+docker run -e AWS_ACCESS_KEY_ID=AKIAVI4ZBKORVS7A7XSQ -e AWS_SECRET_ACCESS_KEY=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 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/go-db:latest
 ```
 
 ## 2. EKS 클러스터 생성
@@ -115,4 +117,17 @@ aws secretsmanager create-secret --name "/secrets/skills/app" \
 --description "MongoDB and Redis credentials for my app" \
 --secret-string '{"mongoUri":"mongodb://wlstmd:cloud24admin!!@docdb-2024-03-22-00-22-46.cluster-cxytji5957dw.ap-northeast-2.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=global-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false","redisAddr":"test-ec-tctbtd.serverless.apn2.cache.amazonaws.com:6379"}' \
 --region ap-northeast-2
+
+aws secretsmanager update-secret --secret-id "/secrets/skills/app" \
+--secret-string '{"mongoUri":"새로운_mongoUri_정보","redisAddr":"새로운_redisAddr_정보"}' \
+--region ap-northeast-2
+
+
+aws secretsmanager get-secret-value --secret-id "/secrets/skills/app" --region ap-northeast-2
+```
+
+## 10. DocumentDB Error Solution
+```
+sudo yum remove mongodb-mongosh
+sudo yum install mongodb-mongosh-shared-openssl3
 ```
