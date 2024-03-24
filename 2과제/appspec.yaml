@@ -1,9 +1,0 @@
-version: 0.0
-Resources:
-  - TargetService:
-      Type: AWS::ECS::Service
-      Properties:
-        TaskDefinition: <태스크 정의 ARN을 여기에 입력>
-        LoadBalancerInfo:
-          ContainerName: "<컨테이너 이름을 여기에 입력>"
-          ContainerPort: <컨테이너 포트를 여기에 입력>

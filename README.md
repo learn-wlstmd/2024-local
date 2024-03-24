@@ -8,4 +8,5 @@ putty
 aws cli
 visual studio code
 terraform
+git
 ```
