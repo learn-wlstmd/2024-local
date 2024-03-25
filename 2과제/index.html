@@ -1,25 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Spring Boot와 통신하기</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-size: 1.2rem;
+      background-color: silver;
+    }
+
+    form, h1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px;
+      margin-top: 5rem;
+      font-weight: bold;
+      font-size: 2rem;
+    }
+
+    label {
+      margin: 10px;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid black;
+      border-radius: 20px;
+      background-color: seashell;
+    }
+
+    #btn {
+      font-weight: bold;
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Spring Boot와 통신하기</h1>
-    <button onclick="callSpringBootAPI()">Spring Boot API 호출</button>
-    <div id="response"></div>
+  <h1>Introduce</h1>
+  <form id="myForm" action="/aws/process-query" method="GET">
+      <label for="username">Username : <input type="text" id="username" name="username" required></label>
+      <label for="age">Age : <input type="text" id="age" name="age" required></label>
+      <input type="submit" id="btn" value="전송">
+  </form>
+  <script>
+    document.getElementById('myForm').onsubmit = function() {
+      let username = document.getElementById('username').value;
+      let age = document.getElementById('age').value;
 
-    <script>
-        function callSpringBootAPI() {
-            fetch('/aws/wsi')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('response').textContent = data;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-    </script>
+      if(username === "" || age === "") {
+        alert('이름과 나이 모두 입력해주세요.');
+        return false;
+      }
+      return true; 
+    };
+  </script>
 </body>
 </html>
