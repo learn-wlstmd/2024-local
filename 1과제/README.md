@@ -34,7 +34,7 @@ docker build -t golang-api .
 docker tag golang-api:latest AWS계정ID.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
 docker push AWS계정ID.dkr.ecr.ap-northeast-2.amazonaws.com/golang-api:latest
 
-docker run -e AWS_ACCESS_KEY_ID=AKIAVI4ZBKORVS7A7XSQ -e AWS_SECRET_ACCESS_KEY=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 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/go-db:latest
+docker run -e AWS_ACCESS_KEY_ID=value -e AWS_SECRET_ACCESS_KEY=value 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com/go-db:latest
 ```
 
 ## 2. EKS 클러스터 생성
