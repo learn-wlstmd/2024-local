@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot와 통신하기</title>
+</head>
+<body>
+    <h1>Spring Boot와 통신하기</h1>
+    <button onclick="callSpringBootAPI()">Spring Boot API 호출</button>
+    <div id="response"></div>
+
+    <script>
+        function callSpringBootAPI() {
+            fetch('/aws/wsi')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('response').textContent = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
