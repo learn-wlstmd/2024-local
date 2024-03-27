@@ -1,4 +1,4 @@
-## 0. 참조 명령어 : eksctl install cmd 추가 해야함
+## 0. 참조 명령어
 ```
 sudo yum update -y
 
