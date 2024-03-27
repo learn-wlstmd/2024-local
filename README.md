@@ -6,7 +6,7 @@ kubectl
 docker
 putty
 aws cli
-visual studio code
+# visual studio code
 terraform
 git
 ```
