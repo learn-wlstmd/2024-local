@@ -75,9 +75,10 @@ eksctl utils associate-iam-oidc-provider --region=ap-northeast-2 --cluster=go-ap
 
 eksctl create iamserviceaccount \
   --cluster=go-api \
+  --region=ap-northeast-2 \
   --namespace=kube-system \
   --name=aws-load-balancer-controller \
-  --role-name AmazonEKSLoadBalancerControllerRole \
+  --role-name=AmazonEKSLoadBalancerControllerRole \
   --attach-policy-arn=arn:aws:iam::362708816803:policy/AWSLoadBalancerControllerIAMPolicy \
   --approve
 
