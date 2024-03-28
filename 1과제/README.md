@@ -45,7 +45,7 @@ eksctl create cluster --name go-api --region ap-northeast-2 --nodegroup-name go-
 
 ## 3. EC2 노드 그룹 생성
 ```
-eksctl create nodegroup --cluster go-api --name go-api-node --node-type t3.medium --nodes-min 2 --nodes-max 2
+eksctl create nodegroup --cluster go-api --name go-api-node --node-type t3.medium --nodes-min 2 --nodes-max 2 --region ap-northeast-2
 ```
 
 
