@@ -17,112 +17,124 @@ import (
 )
 
 var (
-	ctx    = context.Background()
-	client *mongo.Client
-	rdb    *redis.Client
+    ctx    = context.Background()
+    client *mongo.Client
+    rdb    *redis.Client
 )
 
 type Song struct {
-	Title  string `json:"title"`
-	Singer string `json:"singer"`
-	Text   string `json:"text"`
+    Title  string `json:"title"`
+    Singer string `json:"singer"`
+    Text   string `json:"text"`
 }
 
 type Secrets struct {
-	MongoUri  string `json:"mongoUri"`
-	RedisAddr string `json:"redisAddr"`
+    MongoUri  string `json:"mongoUri"`
+    RedisAddr string `json:"redisAddr"`
 }
 
 func main() {
-	secrets := getSecrets("/secrets/skills/app")
-	var err error
-	client, err = mongo.Connect(ctx, options.Client().ApplyURI(secrets.MongoUri))
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer client.Disconnect(ctx)
-	rdb = redis.NewClient(&redis.Options{
-		Addr: secrets.RedisAddr,
-	})
+    secrets := getSecrets("/secrets/skills/app")
+    var err error
 
-	fs := http.FileServer(http.Dir("./static"))
-	http.Handle("/", fs)
+    client, err = mongo.Connect(ctx, options.Client().ApplyURI(secrets.MongoUri))
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer client.Disconnect(ctx)
 
-	// CORS 미들웨어 적용
-	handler := corsMiddleware(http.DefaultServeMux)
+    rdb = redis.NewClient(&redis.Options{
+        Addr: secrets.RedisAddr,
+    })
 
-	http.HandleFunc("/cd", handleSongs)
-	http.HandleFunc("/health", healthCheckHandler)
+    fs := http.FileServer(http.Dir("./static"))
+    http.Handle("/", fs)
 
-	log.Println("서버가 시작됩니다. 포트 8080에서 대기 중...")
+    // CORS 미들웨어 적용
+    handler := corsMiddleware(http.DefaultServeMux)
 
-	log.Fatal(http.ListenAndServe(":8080", handler))
+    http.HandleFunc("/cd/", handleSongs)
+    http.HandleFunc("/health", healthCheckHandler)
+
+    log.Println("서버가 시작됩니다. 포트 8080에서 대기 중...")
+    log.Fatal(http.ListenAndServe(":8080", handler))
 }
 
 func getSecrets(secretName string) Secrets {
-	awsRegion := "ap-northeast-2"
-	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String(awsRegion),
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	svc := secretsmanager.New(sess)
-	input := &secretsmanager.GetSecretValueInput{
-		SecretId: aws.String(secretName),
-	}
-	result, err := svc.GetSecretValue(input)
-	if err != nil {
-		log.Fatal(err)
-	}
-	var secrets Secrets
-	json.Unmarshal([]byte(*result.SecretString), &secrets)
+    awsRegion := "ap-northeast-2"
+    sess, err := session.NewSession(&aws.Config{
+        Region: aws.String(awsRegion),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
 
-	return secrets
+    svc := secretsmanager.New(sess)
+    input := &secretsmanager.GetSecretValueInput{
+        SecretId: aws.String(secretName),
+    }
+
+    result, err := svc.GetSecretValue(input)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    var secrets Secrets
+    json.Unmarshal([]byte(*result.SecretString), &secrets)
+    return secrets
 }
 
 func enableCors(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+    (*w).Header().Set("Access-Control-Allow-Origin", "*")
+    (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+    (*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 }
 
 // CORS 미들웨어 구현
 func corsMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		enableCors(&w)
-		if r.Method == "OPTIONS" {
-			w.WriteHeader(http.StatusOK)
-			return
-		}
-		next.ServeHTTP(w, r)
-	})
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        enableCors(&w)
+        if r.Method == "OPTIONS" {
+            w.WriteHeader(http.StatusOK)
+            return
+        }
+
+        next.ServeHTTP(w, r)
+    })
 }
 
 func handleSongs(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case "POST":
-		saveSong(w, r)
-	case "GET":
-		searchSong(w, r)
-	default:
-		http.Error(w, "Unsupported method", http.StatusMethodNotAllowed)
-	}
+    switch r.Method {
+    case "POST":
+        saveSong(w, r)
+    case "GET":
+        searchSong(w, r)
+    default:
+        http.Error(w, "Unsupported method", http.StatusMethodNotAllowed)
+    }
 }
 
 func saveSong(w http.ResponseWriter, r *http.Request) {
-	var song Song
-	if err := json.NewDecoder(r.Body).Decode(&song); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	collection := client.Database("cd").Collection("songs")
-	_, err := collection.InsertOne(ctx, song)
-	if err != nil {
-		http.Error(w, "Error saving to MongoDB", http.StatusInternalServerError)
-		return
-	}
-	w.WriteHeader(http.StatusCreated)
+    var song Song
+    if err := json.NewDecoder(r.Body).Decode(&song); err != nil {
+        http.Error(w, err.Error(), http.StatusBadRequest)
+        return
+    }
+
+    collection := client.Database("cd").Collection("songs")
+    _, err := collection.InsertOne(ctx, song)
+    if err != nil {
+        http.Error(w, "Error saving to MongoDB", http.StatusInternalServerError)
+        return
+    }
+
+    songJSON, _ := json.Marshal(song)
+    _, err = rdb.Set(ctx, song.Title, songJSON, 0).Result() // Redis에 데이터를 저장하면서 발생할 수 있는 에러를 로깅합니다.
+    if err != nil {
+        log.Printf("Redis에 저장 실패: %v", err)
+    }
+
+    w.WriteHeader(http.StatusCreated)
 }
 
 func searchSong(w http.ResponseWriter, r *http.Request) {
