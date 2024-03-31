@@ -40,3 +40,19 @@ EXPOSE 8080
 
 # 애플리케이션을 실행합니다.
 CMD ["./main"]
+
+
+# 바이너리 파일용
+# FROM alpine:latest
+
+# WORKDIR /app
+
+# ENV AWS_ACCESS_KEY_ID=value \
+#     AWS_SECRET_ACCESS_KEY=value
+
+# COPY go-app .
+# COPY global-bundle.pem .
+
+# RUN chmod +x go-app
+# EXPOSE 8080
+# CMD ["./go-app"]
