@@ -167,3 +167,14 @@ kubectl logs -n kube-system -l app.kubernetes.io/name=aws-load-balancer-controll
 ```
 https://www.convertstring.com/ko/EncodeDecode/Base64Decode
 ```
+
+## 17. Docker ECR Login Solution
+```
+sudo usermod -aG docker $USER
+
+
+sudo systemctl start docker
+
+
+sudo aws ecr get-login-password --region ap-northeast-2 | sudo docker login --username AWS --password-stdin 362708816803.dkr.ecr.ap-northeast-2.amazonaws.com
+```
