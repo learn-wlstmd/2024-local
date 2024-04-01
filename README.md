@@ -1,12 +1,14 @@
 ## 설치 해야할 것들
 ```
-minikube
-eksctl
-kubectl
-docker
-putty
-aws cli
-# visual studio code
-terraform
+Terraform
 git
+awscli
+Powershell 체크
+docker
+vscode
+eksctl
+minikube
+kubectl
+putty
+java sdk
 ```
